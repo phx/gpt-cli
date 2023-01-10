@@ -9,7 +9,7 @@ try:
 except ImportError:
 	pass
 
-openai.organization = os.getenv('ORGANIZATION_ID')
+openai.organization = os.getenv('OPENAI_ORGANIZATION_ID')
 openai.api_key = os.getenv('OPENAI_API_KEY')
 
 model = os.getenv('OPENAI_MODEL')
