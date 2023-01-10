@@ -8,7 +8,7 @@ binfiles = glob.glob('bin/*')
 
 setuptools.setup(
     name='gpt-cli',
-    version='0.0.3',
+    version='0.0.4',
     scripts = binfiles,
     author='phx',
     author_email='phx@example.com',
