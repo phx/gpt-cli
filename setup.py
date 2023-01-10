@@ -8,11 +8,11 @@ binfiles = glob.glob('bin/*')
 
 setuptools.setup(
     name='gpt-cli',
-    version='0.0.2',
+    version='0.0.3',
     scripts = binfiles,
     author='phx',
     author_email='phx@example.com',
-    description='GPT3 interaction from CLI',
+    description='OpenAI interaction from CLI',
     long_description=long_description,
     long_description_content_type="text/markdown",
     url='https://github.com/phx/gpt-cli',
