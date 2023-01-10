@@ -31,7 +31,15 @@ If installing from PyPi, set the `OPENAI_API_KEY` and `OPENAI_ORGANIZATION_ID` i
 gpt 'Your prompt here'
 ```
 
-## Installation:
+## Installation (PyPi) - set variables in rc files:
 
 `python3 -m pip install gpt-cli`
+
+## Installation (local) - set variables in .env:
+
+```
+git clone https://github.com/phx/gpt-cli
+cd gpt-cli
+python3 -m pip install -r requirements.txt
+```
 
