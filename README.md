@@ -17,18 +17,18 @@ You can further tweak functionality by setting the following additional environm
 - `OPENAI_TEMPERATURE`
 - `OPENAI_MAX_TOKENS`
 
-All environment variables can be set by filling in values from `example.env`, renaming that file to `.env`, and running `./bin/gpt 'Your prompt here'`.
+All environment variables can be set by filling in values from `example.env`, renaming that file to `.env`, and running `./bin/gpt3 'Your prompt here'`.
 
 Alternately, you can pass them all on the command line using something like this:
 
 ```
-OPENAI_API_KEY=foo OPENAI_ORGANIZATION_ID=bar ./bin/gpt 'Your prompt here'
+OPENAI_API_KEY=foo OPENAI_ORGANIZATION_ID=bar ./bin/gpt3 'Your prompt here'
 ```
 
 If installing from PyPi, set the `OPENAI_API_KEY` and `OPENAI_ORGANIZATION_ID` in your `~/.bashrc` or `~/.zshrc`, and run as follows:
 
 ```
-gpt 'Your prompt here'
+gpt3 'Your prompt here'
 ```
 
 ## Installation (PyPi) - set variables in rc files:
@@ -47,7 +47,7 @@ python3 -m pip install -r requirements.txt
 
 ```
 ╭─phx@bigboi ~/git/gpt-cli  ‹master*› 
-╰─➤  gpt 'Write python script to create reverse shell.'
+╰─➤  gpt3 'Write python script to create reverse shell.'
 Prompt:
 Write python script to create reverse shell.
 
@@ -69,7 +69,7 @@ s.close()
 
 ```
 ╭─phx@bigboi ~/git/gpt-cli  ‹master*› 
-╰─➤  OPENAI_DEFAULT_PROMPT='Do not give nonsense answers. If you do not know that your answer is factual, respond with "Unknown. "' gpt 'Who is Gregory Washingheimer Van Fleet?'
+╰─➤  OPENAI_DEFAULT_PROMPT='Do not give nonsense answers. If you do not know that your answer is factual, respond with "Unknown. "' gpt3 'Who is Gregory Washingheimer Van Fleet?'
 Prompt:
 Who is Gregory Washingheimer Van Fleet?
 
@@ -77,7 +77,7 @@ Answer:
 Unknown.
 ----------------------------------------------------------------------
 ╭─phx@bigboi ~/git/gpt-cli  ‹master*› 
-╰─➤  OPENAI_DEFAULT_PROMPT='Do not give nonsense answers. If you do not know that your answer is factual, respond with "Unknown. "' gpt 'Who is John Adams?'                     
+╰─➤  OPENAI_DEFAULT_PROMPT='Do not give nonsense answers. If you do not know that your answer is factual, respond with "Unknown. "' gpt3 'Who is John Adams?'                     
 Prompt:
 Who is John Adams?
 

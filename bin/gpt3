@@ -1,0 +1,74 @@
+#!/usr/bin/env python3
+
+import json, os, re, sys
+import openai
+
+try:
+	from dotenv import load_dotenv
+	load_dotenv()
+except ImportError:
+	pass
+
+openai.organization = os.getenv('OPENAI_ORGANIZATION_ID')
+openai.api_key = os.getenv('OPENAI_API_KEY')
+
+model = os.getenv('OPENAI_MODEL')
+default_prompt = os.getenv('OPENAI_DEFAULT_PROMPT')
+log_file = os.getenv('OPENAI_LOGFILE')
+temperature = os.getenv('OPENAI_TEMPERATURE')
+max_tokens = os.getenv('OPENAI_MAX_TOKENS')
+
+
+if not model:
+	model = 'text-davinci-003'
+if not default_prompt:
+	default_prompt = ''
+if not temperature:
+	temperature = 0.0
+else:
+	temperature = float(temperature)
+if not max_tokens:
+	max_tokens = 2048
+else:
+	max_tokens = int(max_tokens)
+
+def write_to_log(display: str):
+	with open(log_file, 'a') as f:
+		f.write(f"{display}\n")
+
+def get_answer(prompt: str, res=None, choices=None, result=None) -> str:
+	req = dict(openai.Completion.create(
+			prompt=prompt,
+			model=model,
+			temperature=temperature,
+			max_tokens=max_tokens
+		))
+	res = req.get('choices')
+	if res:
+		choices = res[0]
+	if choices:
+		res = choices.get('text')
+	if res:
+		result = re.sub(r'\n\n(.*)', '\\1', res)
+	return result
+
+if __name__ == '__main__':
+	if not sys.argv[1:]:
+		print("ERROR: gpt must run with [quoted] string of text as prompt.")
+		sys.exit()
+	real_prompt = ''.join(sys.argv[1:])
+	prompt = f"{default_prompt}{real_prompt}"
+	answer = get_answer(prompt)
+	if not answer:
+		print("Error retrieving answer.")
+		sys.exit()
+	display = (
+			"Prompt:\n"
+			f"{real_prompt}\n\n"
+			"Answer:\n"
+			f"{answer}\n"
+			"----------------------------------------------------------------------"
+		)
+	print(display)
+	if log_file:
+		write_to_log(display)
