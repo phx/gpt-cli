@@ -16,6 +16,19 @@ default_prompt = os.getenv('OPENAI_DEFAULT_PROMPT')
 log_file = os.getenv('OPENAI_LOGFILE')
 temperature = os.getenv('OPENAI_TEMPERATURE')
 max_tokens = os.getenv('OPENAI_MAX_TOKENS')
+full_output = False
+
+if len(sys.argv) > 1:
+	# Arguments were passed, use the arguments as the input
+	if len(sys.argv) >= 2:
+		if '-p' in sys.argv[1]:
+			full_output = True
+			input_data = ''.join(sys.argv[2:])
+	else:
+		input_data = ''.join(sys.argv[1:])
+elif len(sys.argv) == 1:
+	# No arguments were provided, read from standard input
+	input_data = sys.stdin.read()
 
 
 if not model:
@@ -56,22 +69,22 @@ def get_answer(prompt: str, response=None, choices=None, result=None) -> str:
 
 
 if __name__ == '__main__':
-	if not sys.argv[1:]:
-		print("ERROR: gpt must run with [quoted] string of text as prompt.")
-		sys.exit()
-	real_prompt = ''.join(sys.argv[1:])
-	prompt = f"{default_prompt}{real_prompt}"
+	prompt = input_data
 	answer = get_answer(prompt)
 	if not answer:
 		print("Error retrieving answer.")
 		sys.exit()
-	display = (
-			"Prompt:\n"
-			f"{real_prompt}\n\n"
-			"Answer:\n"
-			f"{answer}\n"
-			"----------------------------------------------------------------------"
-		)
+	if full_output:
+		display = (
+				"----------------------------------------------------------------------\n"
+				"Prompt:\n"
+				f"{prompt}\n\n"
+				"Answer:\n"
+				f"{answer}\n"
+				"----------------------------------------------------------------------"
+			)
+	else:
+		display = (f'\n{answer}\n')
 	print(display)
 	if log_file:
 		write_to_log(display)
