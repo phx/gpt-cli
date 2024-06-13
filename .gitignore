@@ -1,0 +1,17 @@
+venv
+venv/*
+.venv
+.venv/*
+.idea
+.idea/*
+.env
+answers
+answers/*
+*.log
+*.egg-info
+dist
+dist/*
+build
+build/*
+*.bak
+setup.py

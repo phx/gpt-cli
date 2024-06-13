@@ -2,12 +2,11 @@
 
 This is a command line tool used for interacting with OpenAI's API.
 
-Default model is `text-davinci-003` (which ChatGPT was originally built from).
+Default model is `gpt-3.5-turbo` (but you can change it to whatever you want).
 
 This tool requires the following environment variables to be set:
 
 - `OPENAI_API_KEY`
-- `OPENAI_ORGANIZATION_ID`
 
 You can further tweak functionality by setting the following additional environment variables:
 
@@ -19,13 +18,15 @@ You can further tweak functionality by setting the following additional environm
 
 All environment variables can be set by filling in values from `example.env`, renaming that file to `.env`, and running `./bin/gpt3 'Your prompt here'`.
 
-Alternately, you can pass them all on the command line using something like this:
+There is also a `gpt4` command in case you set your model to GPT-4 and feel stupid running the `gpt3` command.
+
+Alternately, you can pass the environment variables  on the command line using something like this:
 
 ```
-OPENAI_API_KEY=foo OPENAI_ORGANIZATION_ID=bar ./bin/gpt3 'Your prompt here'
+OPENAI_API_KEY=foo ./bin/gpt3 'Your prompt here'
 ```
 
-If installing from PyPi, set the `OPENAI_API_KEY` and `OPENAI_ORGANIZATION_ID` in your `~/.bashrc` or `~/.zshrc`, and run as follows:
+If installing from PyPi, set the `OPENAI_API_KEY` in your `~/.bashrc` or `~/.zshrc`, and run as follows:
 
 ```
 gpt3 'Your prompt here'

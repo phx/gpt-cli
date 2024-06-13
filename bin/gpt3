@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 import json, os, re, sys
-import openai
+from openai import OpenAI
 
 try:
 	from dotenv import load_dotenv
@@ -9,9 +9,8 @@ try:
 except ImportError:
 	pass
 
-openai.organization = os.getenv('OPENAI_ORGANIZATION_ID')
-openai.api_key = os.getenv('OPENAI_API_KEY')
 
+api_key = os.getenv('OPENAI_API_KEY')
 model = os.getenv('OPENAI_MODEL')
 default_prompt = os.getenv('OPENAI_DEFAULT_PROMPT')
 log_file = os.getenv('OPENAI_LOGFILE')
@@ -20,7 +19,7 @@ max_tokens = os.getenv('OPENAI_MAX_TOKENS')
 
 
 if not model:
-	model = 'text-davinci-003'
+	model = 'gpt-3.5-turbo'
 if not default_prompt:
 	default_prompt = ''
 if not temperature:
@@ -32,25 +31,29 @@ if not max_tokens:
 else:
 	max_tokens = int(max_tokens)
 
+client = OpenAI(api_key=api_key)
+
 def write_to_log(display: str):
 	with open(log_file, 'a') as f:
 		f.write(f"{display}\n")
 
-def get_answer(prompt: str, res=None, choices=None, result=None) -> str:
-	req = dict(openai.Completion.create(
-			prompt=prompt,
-			model=model,
-			temperature=temperature,
-			max_tokens=max_tokens
-		))
-	res = req.get('choices')
-	if res:
-		choices = res[0]
+def get_answer(prompt: str, response=None, choices=None, result=None) -> str:
+	response = client.chat.completions.create(
+		model=model,
+		messages=[
+            		{"role": "system", "content": default_prompt},
+            		{"role": "user", "content": prompt}
+        	],
+		temperature=temperature,
+		max_tokens=max_tokens
+		)
+	choices = response.choices
 	if choices:
-		res = choices.get('text')
+		res = choices[0].message.content
 	if res:
-		result = re.sub(r'\n\n(.*)', '\\1', res)
-	return result
+		return re.sub(r'^\s+|\s+$', '', res)  # Trim leading/trailing whitespace
+	return None
+
 
 if __name__ == '__main__':
 	if not sys.argv[1:]:
