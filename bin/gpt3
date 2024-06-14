@@ -14,11 +14,11 @@ except ImportError:
     pass
 
 api_key = os.getenv('OPENAI_API_KEY')
-model = os.getenv('OPENAI_MODEL')
-default_prompt = os.getenv('OPENAI_DEFAULT_PROMPT')
-log_file = os.getenv('OPENAI_LOGFILE')
-temperature = os.getenv('OPENAI_TEMPERATURE')
-max_tokens = os.getenv('OPENAI_MAX_TOKENS')
+model = os.getenv('OPENAI_MODEL', 'gpt-3.5-turbo')
+default_prompt = os.getenv('OPENAI_DEFAULT_PROMPT', '')
+log_file = os.getenv('OPENAI_LOGFILE', 'gpt.log')
+temperature = float(os.getenv('OPENAI_TEMPERATURE', 0.0))
+max_tokens = int(os.getenv('OPENAI_MAX_TOKENS', 2048))
 
 if not model:
     model = 'gpt-3.5-turbo'
